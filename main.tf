@@ -3,8 +3,15 @@ terraform {
     yandex = {
       source = "yandex-cloud/yandex"
     }
+    kubernetes = {
+      source = "hashicorp/kubernetes"
+    }
   }
-  required_version = ">= 0.13"
+}
+
+provider "kubernetes" {
+  config_path    = "~/.kube/config"
+  #config_context = "my-context"
 }
 
 //Initiating the provider. All parameters are configured as environment variables
@@ -65,4 +72,15 @@ module "alb-create" {
   folder_id = var.folder_id
   ssh_publickey = var.ssh_publickey
   ssh_username = var.ssh_username
+}
+
+//deploying k8s
+module "k8s-deploy" {
+  source = "./modules/k8s-deploy"
+  yc_db_password = var.yc_db_password
+  yc_db_user = var.yc_db_user
+  yc_db_name = var.yc_db_name
+  yc_db_host = module.mdb-create.yc_db_host
+  yc_cr_id = var.yc_cr_id
+  depends_on = [module.service-account-create, module.k8s-cluster-create, module.mdb-create, module.container-build]
 }
