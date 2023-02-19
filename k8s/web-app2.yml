@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: lab-demo
+  labels:
+    app-label: lab-demo-label
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app-label: lab-demo-label
+  template:
+    metadata:
+      labels:
+        app-label: lab-demo-label
+    spec:
+      containers:
+      - name: lab-demo-app
+        image: cr.yandex/crpcis9pig7uf3jpfqs6/sample_image
+        ports:
+        - containerPort: 5000

@@ -1,0 +1,10 @@
+# keys #
+###################
+*.key
+*.ppk
+
+# states #
+###################
+*.lock.hcl
+*.tfstate
+*.tfstate.backup

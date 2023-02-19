@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: lab-demo
+  labels:
+    app-label: lab-demo-label
+spec:
+  ports:
+    - port: 80
+      name: plaintext
+      targetPort: 5000
+  selector:
+    app-label: lab-demo-label
